@@ -39,9 +39,9 @@ function App() {
 
 
   return (
-    <div>
-      <header>
-        <h1>ポケモン図鑑</h1>
+    <>
+      <header className='py-2 border-b-4'>
+        <h1 className='text-white text-center'>ポケモン図鑑</h1>
       </header>
       <main>
         <p>ポケモンを検索してみよう！</p>
@@ -65,7 +65,7 @@ function App() {
       <footer>
         <p><small>&copy; 2025 edu-ktmr. All rights reserved.</small></p>
       </footer>
-    </div>
+    </>
   );
 }
 
