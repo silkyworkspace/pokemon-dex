@@ -17,8 +17,8 @@ function App() {
     try {
       // エラーが起きそうな処理をtryの中で実行
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}`);
-      
-      if(response.ok) {
+
+      if (response.ok) {
         // 取得に成功したら、取得したdataオブジェクトをpokemonに代入
         // かつエラーメッセージは空でerrorに代入
         const data = await response.json();
@@ -28,7 +28,7 @@ function App() {
         // エラーだったら強制的にエラーを発生させ、catchに飛ばす
         throw new Error('見つかりませんでした');
       }
-    } catch(err) {
+    } catch (err) {
       // 失敗したらcatchの中に飛ぶ
       // エラーメッセージをerrorに代入
       // pokemonをnullにする
@@ -37,35 +37,55 @@ function App() {
     }
   };
 
-
   return (
-    <>
-      <header className='py-2 border-b-4'>
-        <h1 className='text-white text-center'>ポケモン図鑑</h1>
+    <div className="flex flex-col min-h-screen">
+      <header className="bg-poke-red border-b-4 border-poke-black py-4">
+        <h1 className="text-white text-2xl text-center font-bold">ポケモン図鑑</h1>
       </header>
-      <main>
-        <p>ポケモンを検索してみよう！</p>
-        <a href='https://github.com/PokeAPI/pokeapi/blob/master/data/v2/csv/pokemon.csv' target='_blank'>英語で入力してね</a>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <button onClick={searchPokemon}>検索する</button>
 
-        {/* errorがtrueの場合、pタグを表示 */}
-        {error && <p>{error}</p>}
+      <main className="flex-grow p-6">
+        <div className="text-center space-y-2">
+          <h2 className="text-lg font-semibold">ポケモンを検索してみよう！</h2>
+          <p className="text-sm">※ 英語で入力してね</p>
+          <a
+            href="https://github.com/PokeAPI/pokeapi/blob/master/data/v2/csv/pokemon.csv"
+            target="_blank"
+            className="text-blue-600 underline text-sm"
+          >
+            ポケモンの英語名を見る
+          </a>
+          <div>
+            <input
+              id='user_pokename'
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="border border-gray-300 px-2 py-1 rounded"
+            />
+            <button
+              onClick={searchPokemon}
+              className="block bg-poke-yellow px-4 py-1 rounded font-semibold w-fit mx-auto my-8 hover:scale-105">
+              検索する
+            </button>
+          </div>
+        </div>
 
-        {/* pokemonがtrueの場合、PokemonCardコンポーネントを表示 */}
-        {pokemon && 
-        <PokemonCard 
-        name={pokemon.name} 
-        height={pokemon.height} 
-        weight={pokemon.weight} 
-        types={pokemon.types.map(t => t.type.name)} 
-        img={pokemon.sprites.front_default}/>}
+        {error && <p className="text-red-500 text-center">{error}</p>}
 
+        {pokemon && (
+          <PokemonCard
+            name={pokemon.name}
+            height={pokemon.height}
+            weight={pokemon.weight}
+            types={pokemon.types.map(t => t.type.name)}
+            img={pokemon.sprites.front_default}
+          />
+        )}
       </main>
-      <footer>
-        <p><small>&copy; 2025 edu-ktmr. All rights reserved.</small></p>
+      <footer className="bg-gray-100 py-4 text-center">
+        <p className="text-sm text-gray-500"><small>&copy; 2025 edu-ktmr. All rights reserved.</small></p>
       </footer>
-    </>
+    </div>
   );
 }
 
